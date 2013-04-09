@@ -263,7 +263,7 @@
           data += "&elclicked=" + smtRec.elem.clicked;
           data += "&action="    + "store";
           data += "&remote="    + smtOpt.storageServer;
-          data += "&body="    + btoa(document.documentElement.innerHTML);
+          data += "&body="    + base64Encode(document.documentElement.innerHTML);
       // send request
       var gatewayUrl = aux.ensureLastURLSlash(smtOpt.trackingServer) + "core/gateway.php";
       aux.sendAjaxRequest({
@@ -315,7 +315,7 @@
           data += "&elclicked=" + smtRec.elem.clicked;
           data += "&action="    + "append";
           data += "&remote="    + smtOpt.storageServer;
-          data += "&body="    + btoa(document.documentElement.innerHTML);
+          data += "&body="    + base64Encode(document.documentElement.innerHTML);
 
       // send request
       var gatewayUrl = aux.ensureLastURLSlash(smtOpt.trackingServer) + "core/gateway.php";
