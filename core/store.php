@@ -43,10 +43,16 @@ if (!$osname) {
   $osid = $osname['id'];
 }
 
+/* persist body first */
+
+$fields  = "body";
+$values  = "COMPRESS('".  $_POST['body']  ."')";
+$body_id = db_insert("smt2_bodies",$fields, $values);
+
 /* create database entry ---------------------------------------------------- */
 $fields  = "client_id,cache_id,os_id,browser_id,browser_ver,user_agent,";
 $fields .= "ftu,ip,scr_width,scr_height,vp_width,vp_height,";
-$fields .= "sess_date,sess_time,fps,coords_x,coords_y,clicks,hovered,clicked"; 
+$fields .= "sess_date,sess_time,fps,coords_x,coords_y,clicks,hovered,clicked,bodies"; 
 
 $values  = "'". $_POST['client']                    ."',";
 $values .= "'". $logid                              ."',";
@@ -69,8 +75,8 @@ $values .= "'". $_POST['xcoords']                   ."',";
 $values .= "'". $_POST['ycoords']                   ."',";
 $values .= "'". $_POST['clicks']                    ."',";
 $values .= "'". array_sanitize($_POST['elhovered']) ."',";
-$values .= "'". array_sanitize($_POST['elclicked']) ."'";
-//$values .= "'". " " ."'";
+$values .= "'". array_sanitize($_POST['elclicked']) ."',";
+$values .= "'". strval( $body_id )                  ."'";
 
 $uid = db_insert(TBL_PREFIX.TBL_RECORDS, $fields, $values);
 // send user ID back to the record script
